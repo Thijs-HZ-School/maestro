@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\RouteProvider;
 use Framework\Request;
 use Framework\Kernel;
 
@@ -13,10 +14,7 @@ if (!is_string($urlPath)) {
 
 $kernel = new Kernel();
 
-$router = $kernel->getRouter();
-
-$router->addRoute('GET', '/', 'Home Page');
-$router->addRoute('GET', '/about', 'About Page');
+$kernel->registerRoutes(new RouteProvider());
 
 $request = new Request($_SERVER['REQUEST_METHOD'], $urlPath, $_GET, $_POST);
 
