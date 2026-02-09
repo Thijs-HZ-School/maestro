@@ -8,7 +8,7 @@ class HomeController
 {
     public function index(): Response
     {
-        return new Response('Home Page');
+        return new Response('<h1>Home Page</h1>');
     }
 
     public function about(): Response

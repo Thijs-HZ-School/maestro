@@ -3,6 +3,7 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\RouteProvider;
+use App\ServiceProvider;
 use Framework\Request;
 use Framework\Kernel;
 
@@ -13,6 +14,8 @@ if (!is_string($urlPath)) {
 }
 
 $kernel = new Kernel();
+
+$kernel->registerServices(new ServiceProvider());
 
 $kernel->registerRoutes(new RouteProvider());
 
