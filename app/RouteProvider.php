@@ -7,10 +7,14 @@ use App\Controllers\TaskController;
 use Framework\RouteProviderInterface;
 use Framework\Router;
 use Framework\ServiceContainer;
+use phpDocumentor\GraphViz\Exception;
 
 class RouteProvider implements RouteProviderInterface
 {
 
+    /**
+     * @throws Exception
+     */
     public function register(Router $router, ServiceContainer $serviceContainer): void
     {
         $homeController = $serviceContainer->get(HomeController::class);
