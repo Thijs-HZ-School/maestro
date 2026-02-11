@@ -7,9 +7,12 @@ class Router
     /** @var array<Route> */
     public array $routes;
 
-    public function __construct()
+    public ResponseFactory $responseFactory;
+
+    public function __construct(responseFactory $responseFactory)
     {
         $this->routes = [];
+        $this->responseFactory = $responseFactory;
     }
 
     public function dispatch(Request $request): Response {
@@ -20,7 +23,7 @@ class Router
             }
         }
 
-        return new Response(body: "404: Page not found", responseCode: 404);
+        return $this->responseFactory->notFound();
     }
 
     public function addRoute(string $method, string $path, callable $callback): void {

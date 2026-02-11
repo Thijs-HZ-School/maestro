@@ -2,17 +2,25 @@
 
 namespace Framework;
 
+use phpDocumentor\GraphViz\Exception;
+
 class Kernel
 {
     private Router $router;
 
     private ServiceContainer $container;
 
+    /**
+     * @throws Exception
+     */
     public function __construct()
     {
-        $this->router = new Router();
+        $responseFactory = new ResponseFactory();
 
+        $this->router = new Router($responseFactory);
         $this->container = new ServiceContainer();
+
+        $this->container->set(ResponseFactory::class, $responseFactory);
     }
 
     public function handle(Request $request): Response
