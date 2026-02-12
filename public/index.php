@@ -13,7 +13,12 @@ if (!is_string($urlPath)) {
     $urlPath = '/';
 }
 
-$kernel = new Kernel();
+$config = [
+    "APP_ENV" => "development",
+    "VIEWS_PATH" => "../app/views",
+];
+
+$kernel = new Kernel($config);
 
 $kernel->registerServices(new ServiceProvider());
 

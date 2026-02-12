@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use Framework\Response;
 use Framework\ResponseFactory;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class TaskController
 {
@@ -14,13 +17,23 @@ class TaskController
         $this->responseFactory = $responseFactory;
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function index(): Response
     {
-        return $this->responseFactory->body('List of all tasks');
+        return $this->responseFactory->view('task/index.html.twig');
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function create(): Response
     {
-        return $this->responseFactory->body('Create a new task');
+        return $this->responseFactory->view('task/create.html.twig');
     }
 }

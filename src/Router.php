@@ -2,6 +2,10 @@
 
 namespace Framework;
 
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+
 class Router
 {
     /** @var array<Route> */
@@ -15,6 +19,11 @@ class Router
         $this->responseFactory = $responseFactory;
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function dispatch(Request $request): Response {
         foreach ($this->routes as $route) {
             if ($route->matches($request->method, $request->path)) {

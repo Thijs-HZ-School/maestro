@@ -7,11 +7,10 @@ use App\Controllers\TaskController;
 use Framework\ResponseFactory;
 use Framework\ServiceContainer;
 use Framework\ServiceProviderInterface;
-use phpDocumentor\GraphViz\Exception;
+use \Exception;
 
 class ServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @throws Exception
      */

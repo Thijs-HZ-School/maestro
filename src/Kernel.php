@@ -2,7 +2,10 @@
 
 namespace Framework;
 
-use phpDocumentor\GraphViz\Exception;
+use \Exception;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class Kernel
 {
@@ -10,19 +13,29 @@ class Kernel
 
     private ServiceContainer $container;
 
+    private ConfigManager $configManager;
+
     /**
      * @throws Exception
      */
-    public function __construct()
+    public function __construct(array $config)
     {
-        $responseFactory = new ResponseFactory();
+        $this->configManager = new ConfigManager($config);
+        $debugMode = $this->configManager->get('APP_ENV') != 'production';
 
-        $this->router = new Router($responseFactory);
         $this->container = new ServiceContainer();
 
+        $responseFactory = new ResponseFactory($debugMode, $this->configManager->get('VIEWS_PATH'));
         $this->container->set(ResponseFactory::class, $responseFactory);
+
+        $this->router = new Router($responseFactory);
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function handle(Request $request): Response
     {
         return $this->router->dispatch($request);
